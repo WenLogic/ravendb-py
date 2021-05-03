@@ -92,7 +92,7 @@ class session(object):
         if res.status_code != 401:
             return res
         self.updateAuthorizationFromApiKey()
-        return requests.post(queryUrl, headers=headers)
+        return requests.delete(queryUrl, headers=headers)
 
 # Shouldn't be changing a session configuration, create a new one
 #    def configure(self, configuration):

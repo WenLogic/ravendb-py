@@ -8,16 +8,11 @@ class querier(object):
         self._indexId = indexId
 
     def query(self, query = '', fetch = {}):
-
+        
         qs = {}
-        genQuery = ''
 
         if not isinstance(query, string_types):
-            parsedQuery = ''
-            for key, value in query.items():
-                genQuery = '{0} AND {1}:{2}'.format(parsedQuery, key, value)
-            genQuery = parsedQuery[5:]
-            qs['query'] = genQuery
+            qs['query'] = ' AND '.join(list(map(lambda kv: '{0}:{1}'.format(kv[0], kv[1]), query.items())))
         else:
             qs['query'] = query
 

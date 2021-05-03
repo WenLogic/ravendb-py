@@ -12,12 +12,7 @@ class bulk(object):
         bulk = []
 
         for transaction in self._transactions:
-            bulk.append({
-                "Method": transaction["action"],
-                "Document": transaction["doc"],
-                "Key": transaction["id"],
-                "Metadata": transaction["metadata"]
-            })
+            bulk.append(transaction)
 
         url = '{0}/databases/{1}/bulk_docs'.format(self._client.url, self._client.database)
 

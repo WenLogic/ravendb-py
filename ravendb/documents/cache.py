@@ -20,10 +20,10 @@ class cache(object):
             id = str(self._idgenerator.Create(document['@metadata']['Raven-Entity-Name']))
             ids.append(id)
             self._cache.append({
-                "action": "PUT",
-                "id": id,
-                "doc": document,
-                "metadata": document['@metadata']
+                "Method": "PUT",
+                "Key": id,
+                "Document": document,
+                "Metadata": document['@metadata']
             })
 
         return ids
@@ -35,21 +35,34 @@ class cache(object):
                 if docId in item:
                     self._cache.remove(index)
             self._cache.append({
-                "action": "DELETE",
-                "id": docId,
-                "doc": {},
-                "metadata": {}
+                "Method": "DELETE",
+                "Key": docId,
+                "Document": {},
+                "Metadata": {}
             })
 
-    def update(self, documents):
+    def update(self, updates):
 
         ids = []
 
-        for update in documents:
+        for update in updates:
             ids.append(update["id"])
 
             for index, item in enumerate(self._cache):
                 if update["id"] in item:
-                    self._cache[index]["doc"] = update["doc"]
+                    self._cache[index]["document"] = update["document"]
+            
+            self._cache.append({
+                "Method": "PATCH",
+                "Key": update['id'],
+                "Patches": list(map(
+                    lambda item: {
+                        "Name": item[0],
+                        "Value": item[1],
+                        "Type":"UnSet" if item[1] is None else "Set"
+                    }
+                    ,update["document"].items())),
+                "Metadata": {}
+            })
 
         return ids
