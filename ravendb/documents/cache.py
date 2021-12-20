@@ -10,14 +10,14 @@ class cache(object):
     def list(self):
         return self._cache
 
-    def add(self, documents):
-
+    def add(self, requests):
         ids = []
-
-        for document in documents:
+        
+        for request in requests:
+            document = request['document']
             if '@metadata' not in document and 'Raven-Entity-Name' not in document['@metadata']:
                 raise Exception('documents must have entity name')
-            id = str(self._idgenerator.Create(document['@metadata']['Raven-Entity-Name']))
+            id = request['id'] if 'id' in request else str(self._idgenerator.Create(document['@metadata']['Raven-Entity-Name']))
             ids.append(id)
             self._cache.append({
                 "Method": "PUT",
