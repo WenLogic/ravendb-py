@@ -102,8 +102,8 @@ class session(object):
         self.commands.bulk(self._cache.list())
         self._cache.reset()
 
-    def store(self, documents):
-        return self._cache.add(documents)
+    def store(self, requests):
+        return self._cache.add(requests)
 
     def update(self, updates):
         return self._cache.update(updates)
