@@ -120,8 +120,8 @@ class session(object):
     def load(self, documentIds):
         return self.queries.load(documentIds)
 
-    def query(self, indexId, query, fetch = {}):
-        return self.queries.query(indexId, query, fetch)
+    def query(self, indexId, query, fetch = {}, pageoffset = 0, pagelimit=256):
+        return self.queries.query(indexId, query, fetch, pageoffset, pagelimit)
 
     def createDocument(self, entityType, doc = {}):
         if '@metadata' not in doc:
