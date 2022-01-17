@@ -7,7 +7,7 @@ class querier(object):
         self._client = client
         self._indexId = indexId
 
-    def query(self, query = '', fetch = {}):
+    def query(self, query = '', fetch = {}, pageoffset=0, pagelimit=256):
         
         qs = {}
 
@@ -16,9 +16,8 @@ class querier(object):
         else:
             qs['query'] = query
 
-        # HACK make configurable / paging?
-        qs['start'] = 0
-        qs['pageSize'] = 1024
+        qs['start'] = pageoffset
+        qs['pageSize'] = pagelimit
 
         if len(fetch) > 0:
             qs['fetch'] = fetch
