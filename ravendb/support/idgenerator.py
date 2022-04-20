@@ -49,7 +49,7 @@ class hilo(object):
     def _getHilo(self, entityType):
         r = self._client._get(self._hiloUrl + entityType)
         if r.status_code == 200:
-            return r.json()['max']
+            return r.json()['Max']
         elif r.status_code == 404:
             return -1
         raise Exception('Could not fetch Hilo doc for ' + entityType)
